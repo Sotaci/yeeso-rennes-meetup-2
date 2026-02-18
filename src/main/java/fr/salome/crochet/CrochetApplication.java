@@ -1,13 +1,13 @@
-package fr.salome.crochetapp;
+package fr.salome.crochet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CrochetappApplication {
+public class CrochetApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CrochetappApplication.class, args);
+		SpringApplication.run(CrochetApplication.class, args);
 	}
 
 }

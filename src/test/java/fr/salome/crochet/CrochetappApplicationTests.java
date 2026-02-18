@@ -1,6 +1,5 @@
-package fr.salome.crochetapp;
+package fr.salome.crochet;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
