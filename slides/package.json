@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@marp-team/marp-cli": "^4.2.3",
+    "@marp-team/marpit": "^3.2.1",
+    "markdown-it-highlight-lines": "^1.0.2"
+  },
+  "scripts": {
+    "marp": "marp index.md -w --html -c ./marp.config.js --theme ./index.css --allow-local-files"
+  }
+}
