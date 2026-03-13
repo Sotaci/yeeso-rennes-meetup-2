@@ -6,8 +6,13 @@ import fr.salome.crochet.pattern.domain.entities.values.PatternState;
 import java.util.List;
 import java.util.UUID;
 
-public record PatternResponse(UUID id, String name, PatternState state, GaugeResponse gauge,
-							  List<String> instructions) {
+public record PatternResponse(UUID id,
+							  String name,
+							  PatternState state,
+							  GaugeResponse gauge,
+							  List<String> instructions,
+							  MaterialsResponse materials
+) {
 
 	public static PatternResponse fromEntity(Pattern pattern) {
 		return new PatternResponse(
@@ -15,7 +20,8 @@ public record PatternResponse(UUID id, String name, PatternState state, GaugeRes
 				pattern.name(),
 				pattern.state(),
 				GaugeResponse.fromEntity(pattern.gauge()),
-				pattern.instructions()
+				pattern.instructions(),
+				MaterialsResponse.fromDomain(pattern.materials())
 		);
 	}
 }

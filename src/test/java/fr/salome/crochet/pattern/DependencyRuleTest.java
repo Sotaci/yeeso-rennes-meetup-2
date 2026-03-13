@@ -6,8 +6,6 @@ import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import fr.salome.crochet.DependencyRules;
 import fr.salome.crochet.pattern.domain.entities.Pattern;
-import fr.salome.crochet.pattern.domain.entities.values.Gauge;
-import fr.salome.crochet.pattern.domain.entities.values.PatternState;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
@@ -45,9 +43,10 @@ class DependencyRuleTest {
 			"java..",
 			"org.springframework..",
 			"jakarta..",
-			// Pattern infra is allowed to access root of patternAd and patternTestAd modules
+			// Pattern infra is allowed to access root of patternAd, patternTestAd and materials modules
 			"fr.salome.crochet.pattern_ad",
-			"fr.salome.crochet.pattern_test_ad"
+			"fr.salome.crochet.pattern_test_ad",
+			"fr.salome.crochet.materials"
 	);
 
 	@ArchTest

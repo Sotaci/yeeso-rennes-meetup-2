@@ -1,6 +1,7 @@
 package fr.salome.crochet.pattern.domain.entities;
 
 import fr.salome.crochet.pattern.domain.entities.values.Gauge;
+import fr.salome.crochet.pattern.domain.entities.values.Materials;
 import fr.salome.crochet.pattern.domain.entities.values.PatternId;
 import fr.salome.crochet.pattern.domain.entities.values.PatternState;
 import fr.salome.crochet.pattern.domain.exceptions.PatternDomainException;
@@ -21,14 +22,16 @@ public class Pattern {
 
 	// value object
 	private Gauge gauge;
+	private Materials materials;
 
 	// constructeur utilisé uniquement par la couche infrastructure
-	public Pattern(UUID id, String name, PatternState state, List<String> instructions, Gauge gauge) {
+	public Pattern(UUID id, String name, PatternState state, List<String> instructions, Gauge gauge, Materials materials) {
 		this.id = new PatternId(id);
 		this.name = name;
 		this.state = state;
 		this.gauge = gauge;
 		this.instructions = instructions;
+		this.materials = materials;
 	}
 
 	private Pattern(String name) {
@@ -37,6 +40,7 @@ public class Pattern {
 		this.state = PatternState.IN_PROGRESS;
 		this.gauge = null;
 		this.instructions = new ArrayList<>();
+		this.materials = Materials.empty();
 	}
 
 	// factory method, utilisée pour créer un nouveau pattern
@@ -75,6 +79,12 @@ public class Pattern {
 		this.instructions.set(index, content);
 	}
 
+	public void updateMaterials(Materials materials) throws PatternDomainException {
+		validateUpdateAllowed();
+
+		this.materials = materials;
+	}
+
 	/*
 	 * accesseurs pour le mapping
 	 */
@@ -97,6 +107,10 @@ public class Pattern {
 
 	public PatternState state() {
 		return state;
+	}
+
+	public Materials materials() {
+		return materials;
 	}
 
 	public boolean isNew() {

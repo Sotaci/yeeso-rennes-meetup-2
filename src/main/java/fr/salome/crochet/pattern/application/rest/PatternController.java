@@ -5,6 +5,7 @@ import fr.salome.crochet.pattern.application.rest.request.PublishPatternRequest;
 import fr.salome.crochet.pattern.application.rest.request.UpdateGaugeRequest;
 import fr.salome.crochet.pattern.application.rest.request.UpdateInstructionsRequest;
 import fr.salome.crochet.pattern.application.rest.request.UpdateNameRequest;
+import fr.salome.crochet.pattern.application.rest.request.UpdateYarnsRequest;
 import fr.salome.crochet.pattern.application.rest.response.PatternResponse;
 import fr.salome.crochet.pattern.domain.entities.values.Gauge;
 import fr.salome.crochet.pattern.domain.entities.values.PatternId;
@@ -13,6 +14,7 @@ import fr.salome.crochet.pattern.domain.exceptions.PatternNotFoundException;
 import fr.salome.crochet.pattern.domain.exceptions.PatternValidationException;
 import fr.salome.crochet.pattern.domain.usecases.CrudPattern;
 import fr.salome.crochet.pattern.domain.usecases.PublishPatternForSale;
+import fr.salome.crochet.pattern.domain.usecases.UpdateMaterials;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,12 +32,14 @@ public class PatternController {
 
 	private final CrudPattern crudPattern;
 	private final PublishPatternForSale publishPatternForSale;
+	private final UpdateMaterials updateMaterials;
 
 	public PatternController(
-			CrudPattern crudPattern, PublishPatternForSale publishPatternForSale
+			CrudPattern crudPattern, PublishPatternForSale publishPatternForSale, UpdateMaterials updateMaterials
 	) {
 		this.crudPattern = crudPattern;
 		this.publishPatternForSale = publishPatternForSale;
+		this.updateMaterials = updateMaterials;
 	}
 
 	@PostMapping
@@ -72,6 +76,13 @@ public class PatternController {
 	@PutMapping("/{id}/instructions")
 	public ResponseEntity<PatternResponse> updateInstructions(@PathVariable UUID id, @RequestBody UpdateInstructionsRequest instructions) throws PatternDomainException, PatternValidationException, PatternNotFoundException {
 		final var updated = crudPattern.updateInstruction(new PatternId(id), instructions.index(), instructions.content());
+
+		return ResponseEntity.ok(PatternResponse.fromEntity(updated));
+	}
+
+	@PutMapping("/{id}/yarns")
+	public ResponseEntity<PatternResponse> updateYarns(@PathVariable UUID id, @RequestBody UpdateYarnsRequest request) throws PatternDomainException, PatternValidationException, PatternNotFoundException {
+		final var updated = updateMaterials.updateYarns(new PatternId(id), request.yarnIds());
 
 		return ResponseEntity.ok(PatternResponse.fromEntity(updated));
 	}

@@ -30,23 +30,41 @@ public class PatternDbo {
 	@EmbeddedColumnNaming("gauge_%s")
 	private GaugeDbo gauge;
 	private List<String> instructions;
+	@Embedded
+	@EmbeddedColumnNaming("materials_%")
+	private MaterialsDbo materials;
 
 	public PatternDbo() {
 	}
 
-	public PatternDbo(UUID id, String name, PatternState state, GaugeDbo gauge, List<String> instructions) {
+	public PatternDbo(UUID id, String name, PatternState state, GaugeDbo gauge, List<String> instructions, MaterialsDbo materials) {
 		this.id = id;
 		this.name = name;
 		this.state = state;
 		this.gauge = gauge;
 		this.instructions = instructions;
+		this.materials = materials;
 	}
 
 	public static PatternDbo fromDomain(Pattern pattern) {
-		return new PatternDbo(pattern.id().value(), pattern.name(), pattern.state(), GaugeDbo.fromDomain(pattern.gauge()), pattern.instructions());
+		return new PatternDbo(
+				pattern.id().value(),
+				pattern.name(),
+				pattern.state(),
+				GaugeDbo.fromDomain(pattern.gauge()),
+				pattern.instructions(),
+				MaterialsDbo.fromDomain(pattern.materials())
+		);
 	}
 
 	public static Pattern toDomain(PatternDbo dbo) {
-		return new Pattern(dbo.getId(), dbo.getName(), dbo.getState(), dbo.getInstructions(), GaugeDbo.toDomain(dbo.getGauge()));
+		return new Pattern(
+				dbo.getId(),
+				dbo.getName(),
+				dbo.getState(),
+				dbo.getInstructions(),
+				GaugeDbo.toDomain(dbo.getGauge()),
+				MaterialsDbo.toDomain(dbo.getMaterials())
+		);
 	}
 }

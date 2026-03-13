@@ -1,6 +1,5 @@
 package fr.salome.crochet.pattern.domain.usecases;
 
-import fr.salome.crochet.kernel.Result;
 import fr.salome.crochet.kernel.Success;
 import fr.salome.crochet.kernel.Failure;
 import fr.salome.crochet.pattern.domain.entities.Pattern;
@@ -9,13 +8,13 @@ import fr.salome.crochet.pattern.domain.entities.values.PatternId;
 import fr.salome.crochet.pattern.domain.exceptions.PatternDomainException;
 import fr.salome.crochet.pattern.domain.exceptions.PatternNotFoundException;
 import fr.salome.crochet.pattern.domain.exceptions.PatternValidationException;
+import fr.salome.crochet.pattern.domain.ports.MaterialValidatorPort;
 import fr.salome.crochet.pattern.domain.ports.PatternRepositoryPort;
 import fr.salome.crochet.pattern.domain.specifications.InstructionContentSpecification;
 import fr.salome.crochet.pattern.domain.specifications.PatternNameSpecification;
 
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
+import java.util.List;
+import java.util.UUID;
 
 public class CrudPattern {
 	private final PatternRepositoryPort repository;

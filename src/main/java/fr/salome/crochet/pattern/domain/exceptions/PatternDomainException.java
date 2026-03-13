@@ -7,7 +7,7 @@ public class PatternDomainException extends Exception {
 	private PatternDomainException(String message) {
 		super(message);
 	}
-	
+
 	// Factory methods for domain errors
 
 	public static PatternDomainException cannotPublishEmptyInstructions(PatternId id) {
@@ -28,5 +28,13 @@ public class PatternDomainException extends Exception {
 
 	public static PatternDomainException invalidGaugeValues() {
 		return new PatternDomainException("Invalid gauge values, values should be positive numbers");
+	}
+
+	public static PatternDomainException invalidYarnIds() {
+		return new PatternDomainException("Invalid yarn IDs");
+	}
+
+	public static PatternDomainException invalidHookIds() {
+		return new PatternDomainException("Invalid hook IDs");
 	}
 }
